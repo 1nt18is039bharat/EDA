@@ -1,0 +1,573 @@
+---
+title: "EDA-LA01 / Student_Test_Scores_Prediction"
+author: "Bharat(1NT18IS039) & Adarsh(1NT18IS011)"
+date: "11/07/2021"
+output: html_document
+---
+# github link:"https://github.com/1NT18IS011-AdarshHegde/EDA-CE"
+
+
+# Reading csv dataset file from local storage and storing it as dataset 
+```{r}
+dataset <- read.csv("D:/Academic/Sem VI/EDA-LA01/EDA-LA01/test_scores.csv")
+```
+# Printing the dataset
+```{r}
+dataset
+```
+# Getting structure of dataset
+```{r}
+str(dataset)
+```
+# Getting class of dataset
+```{r}
+class(dataset)
+```
+# Getting all the attributes of dataset
+```{r}
+ls(dataset)
+```
+# Printing values of dataset attributes
+```{r}
+head(dataset$gender,n=10)
+```
+```{r}
+head(dataset$lunch,n=30)
+```
+# Getting summury of the dataset and attributes of dataset
+```{r}
+summary(dataset)
+```
+```{r}
+summary(dataset$gender)
+```
+```{r}
+summary(dataset$pretest)
+```
+# Length of the dataset and its attributes
+```{r}
+length(dataset)
+```
+```{r}
+length(dataset$posttest)
+```
+```{r}
+length(dataset$lunch)
+```
+# Getting column names of the dataset
+```{r}
+colnames(dataset)
+```
+# Coverting datatype of the Dataset attributes
+```{r}
+# converting character to integer
+numrc=as.numeric(dataset$school)
+head(numrc)
+```
+```{r}
+# converting integer to character
+numrch=as.character(dataset$pretest)
+head(numrch)
+```
+# Saving history
+```{r}
+history=savehistory(file ='EDA-LA1.Rhistory')
+```
+# Show history
+```{r}
+history(show.max=10)
+```
+# Saving data files to disk
+```{r}
+save(dataset,file='C:/Users/Aadarsh Hegde/Downloads/La1.RData')
+load('C:/Users/Aadarsh Hegde/Downloads/La1.RData')
+```
+# Manipulating vectors of dataset
+```{r}
+data1=dataset$posttest     #Assigning reading score values to data1
+```
+```{r}
+head(data1,n=20)                           #reading values in the data1
+```
+```{r}
+length(data1)                   #Getting length of data1
+```
+```{r}
+max(data1)                      #Maximum value in the data1
+```
+```{r}
+which(data1==max(data1))        #Getting positions of the occurrence of the maximum value of data1 
+```
+# Returning logical values from vector
+```{r}
+which(data1==77)
+```
+# Reading values with skipping values by particular number
+```{r}
+# Syntax : sequence(starting point , length , no.of interval)
+dataset$n_student[seq(1,length(dataset$n_student),10)]
+```
+```{r}
+dataset$pretest[seq(1,length(dataset$pretest),20)]
+```
+# Performing 'order' on dataset
+```{r}
+head(order(dataset),n=100)
+```
+```{r}
+head(order(dataset$posttest),n=100)
+```
+#Performing 'sort' on dataset
+```{r}
+head(sort(dataset$gender),n=30)              #sorting gender of dataset
+```
+```{r}
+head(sort(dataset$n_student),n=50)          #sorting of students
+```
+```{r}
+sort(dataset[1,])                 #sorting on 1st row and all the columns of dataset
+```
+```{r}
+sort(dataset[,1])                 #sorting on 1st column and all rows of dataset
+```
+# Performing 'rank' on dataset
+```{r}
+head(rank(dataset$student_id),n=50) #rank on test course preparation
+```
+```{r}
+head(rank(dataset$school_type),n=50)              #rank on math score
+
+```
+# Manipulating dataframes
+```{r}
+dataset[3,3]                    #Reading values from 3rd row,3rd column
+```
+```{r}
+dataset[4,]                     #Reading values from 4th row,all columns
+```
+```{r}
+dataset[,2]                     #Reading values from all rows with only 2nd column
+```
+```{r}
+dataset[3,1:4]                  #select the third row and display columns one to four
+```
+```{r}
+dataset[c(1,5,10,15),]          #Specify several rows but leave out a value at the end to display all columns
+```
+```{r}
+dataset[c(1,3,5,7),-4]               #specify several rows but display all columns except the fourth
+```
+
+# Quick looks at Complicated Data Objects
+```{r}
+# Reading first six values of dataset
+head(dataset)
+```
+```{r}
+# Reading last six values fo dataset
+tail(dataset)
+```
+```{r}
+# Reading desired number of values from the top or bottom
+head(dataset,n=20)
+```
+```{r}
+head(dataset$school,n=20)
+```
+```{r}
+tail(dataset,n=10)
+```
+```{r}
+tail(dataset$lunch,n=10)
+
+```
+# Viewing and Setting Names
+```{r}
+names(dataset)                  #Getting all column names of dataset
+```
+```{r}
+head(row.names(dataset),n=20)              #Getting rows of dataset
+```
+```{r}
+head(dimnames(dataset),n=50)               #Getting both rows and columns
+
+```
+# Rotating data tables
+```{r}
+dataset2=dataset
+dataset2.t=t(dataset2)
+head(dataset2.t,n=60)
+```
+```{r}
+data2=head(dataset$posttest,n=10)
+post.score.t=t(data2)
+post.score.t
+
+```
+# Re-ordering data Frames
+# Create an index using the values in the gender column, with ties resolved by the math.score column
+```{r}
+data2=with(dataset, order(gender,n_student))
+head(data2,n=50)
+```
+# Converting dataframe into matrix
+```{r}
+data_matrix=as.matrix(dataset)
+head(data_matrix,n=50)
+```
+# To add new column to data frame
+```{r}
+library(dplyr)
+dataset2%>%mutate(newcol = NA)
+```
+# Getting a Subset of a Data Frame
+```{r}
+# Loading the package
+library(gcookbook)                  
+```
+# To keep rows where gender is "male" and where the maths score is inclusive of and between 60 and 100. using filter()  function from gcookbook.
+```{r}
+dataset2 %>% filter(gender=="Male",posttest==60)
+```
+# Changing the Order of Factor Levels
+```{r}
+# Installing forcats package
+library(forcats)
+```
+# To use two vectors, one with the original levels and one with the new ones, use do.call() with fct_recode().
+```{r}
+data3mappings <- setNames(dataset$school_setting,dataset$n_student)
+head(data3mappings)
+
+```
+# Removing Unused Levels from a Factor
+```{r}
+head(fct_drop(dataset2$gender),n=20)
+```
+# Work on a subset of the dataset data set
+```{r}
+pg <- dataset[c(1:10),]
+pg
+```
+# Calculating New Columns from Existing Columns
+# To calculate a new column of values in a data frame.
+# Use mutate() from the dplyr package:
+```{r}
+data4 <- dataset
+head(data4 %>% mutate(n_student=n_student*2),n=20)
+```
+# Data normalization
+# Loading all required libraries
+```{r}
+library(MASS)
+library(dplyr)
+library(gcookbook)
+library(ggplot2)
+```
+# Box plot
+```{r}
+ggplot(dataset, aes(x=pretest, y=posttest))+geom_boxplot()
+```
+# Summarizing Data by Groups
+```{r}
+ # Load MASS library for the dataset data set
+library(MASS)
+library(dplyr)
+library(tidyr)
+```
+```{r}
+summarise(dataset, math.score = mean(pretest))
+```
+
+```{r}
+ggplot(dataset,aes(x=pretest, fill=n_student, y=posttest))+geom_col(position ="dodge")
+```
+
+# Creating a Scatter Plot
+```{r}
+plot(dataset$pretest, dataset$posttest)
+# Scatter plot with base graphics
+```
+
+# Scatter plot with ggplot 2
+```{r}
+library(ggplot2)
+ggplot(dataset, aes(x = n_student, y = pretest)) +geom_point()
+
+ggplot(data = NULL, aes(x =dataset$pretest, y=dataset$posttest )) +
+geom_point()
+```
+
+# Creating a Line Graph
+```{r}
+plot(dataset$pretest,type = "l")
+```
+
+# Line graph with base graphics
+```{r}
+plot(head(dataset$pretest),head(dataset$posttest),  type = "l")
+points(head(dataset$pretest),head(dataset$posttest))
+```
+# Line graph with ggplot() and With points added to ggplot()
+```{r}
+ggplot(head(dataset,n=20), aes(x = pretest, y = posttest)) +geom_line()
+ggplot(head(dataset,n=20), aes(x = pretest, y = posttest)) +geom_line()+geom_point()
+```
+# Creating a Bar Graph
+```{r}
+barplot(head(dataset$n_student), names.arg = head(dataset$pretest))
+```
+# Generate a table of counts
+```{r}
+barplot(table(dataset$pretest))
+```
+# Laoding ggplot2() package
+```{r}
+library(ggplot2)
+```
+# Bar graph of values. This uses the dataset data frame, with the
+# "pretest" column for x values and the "posttest" column for y values.
+```{r}
+ggplot(dataset, aes(x = pretest, y = posttest)) +geom_col()
+```
+# Convert the x variable to a factor, so that it is treated as discrete
+```{r}
+ggplot(dataset, aes(x = factor(pretest), y = posttest)) +geom_col()
+```
+
+# Bar graph of counts. This uses the dataset data frame, with the "pretest" column for
+# x position. The y position is calculated by counting the number of rows for
+# each value of pretest.
+```{r}
+ggplot(dataset, aes(x = pretest)) +
+geom_bar()
+# Bar graph of counts
+ggplot(dataset, aes(x = factor(pretest))) +
+geom_bar()
+```
+# Creating a Histogram
+```{r}
+hist(dataset$pretest)
+# Specify approximate number of bins with breaks
+hist(dataset$pretest, breaks = 10)
+```
+#ggplot2 histogram with default bin width (left); With wider bins (right)
+```{r}
+ggplot(dataset, aes(x = pretest)) +
+geom_histogram()
+ggplot(dataset, aes(x = pretest)) +
+geom_histogram(binwidth = 4)
+```
+# Creating a Box Plot
+```{r}
+boxplot(head(dataset$n_student,n=500), head(dataset$pretest,n=500))
+```
+# Make box plots for multiple variables, by combining the variables with interaction()
+```{r}
+ggplot(head(dataset,n=100), aes(x = interaction(pretest, posttest), y = n_student)) +
+geom_boxplot()
+```
+# Making a Basic Histogram
+```{r}
+ggplot(dataset, aes(x = pretest)) +geom_histogram()
+```
+```{r}
+ggplot(dataset, aes(x= posttest)) +
+geom_histogram(binwidth = 5, fill = "white", colour = "black")
+```
+# Map pretest to fill, make the bars NOT stacked, and make them semitransparent
+```{r}
+ggplot(dataset, aes(x = pretest, fill ='pretest',colour='red' )) +
+geom_histogram(position = "identity", alpha = 0.4)
+```
+# Making a Density Curve
+```{r}
+ggplot(dataset, aes(x = n_student)) +geom_density()
+# expand_limits() increases the y range to include the value 0
+ggplot(dataset, aes(x = pretest)) +geom_line(stat = "density") +expand_limits(y = 0)
+```
+# Density curve with a smaller and larger value of adjust:
+```{r}
+ggplot(dataset, aes(x = posttest)) +geom_line(stat = "density") +
+geom_line(stat = "density", adjust = .25, colour = "red") +
+geom_line(stat = "density", adjust = 2, colour = "blue")
+```
+# This draws a blue polygon with geom_density(), then adds a line on top
+# Density curve with wider x limits and a semitransparent fill (left); In two
+# parts, with geom_density() and geom_line() (right)
+```{r}
+ggplot(dataset, aes(x = pretest)) +
+geom_density(fill = "blue", alpha = .2) +
+xlim(35, 105)
+ggplot(dataset, aes(x = pretest)) +
+geom_density(fill = "blue", alpha = .2, colour = NA) +
+xlim(35, 105) +
+geom_line(stat = "density")
+```
+# Density curve overlaid on a histogram
+```{r}
+ggplot(dataset, aes(x = pretest, y = ..density..)) +geom_histogram(fill = "cornsilk", colour = "grey60", size = .2) +geom_density() +xlim(35, 105)
+```
+# Making Multiple Density Curves from Grouped Data
+```{r}
+data5 <- dataset %>%
+mutate(n_student = as.factor(n_student)) # Convert n_student to a factor
+# Map n_student to colour
+ggplot(data5, aes(x = pretest, colour = "red")) +geom_density()
+# Map n_student to fill and make the fill semitransparent by setting alpha
+ggplot(data5, aes(x = pretest, fill = pretest)) +geom_density(alpha = .3)
+```
+# Making a Frequency Polygon
+```{r}
+ggplot(dataset, aes(x=pretest)) +
+geom_freqpoly()
+ggplot(faithful, aes(x = waiting)) +      
+geom_freqpoly(binwidth = 4)           #controlling bin width
+```
+# Divide the x-axis range into 15 bins
+```{r}
+binsize <- diff(range(dataset$pretest))/15
+ggplot(dataset, aes(x = pretest)) +
+geom_freqpoly(binwidth = binsize)
+```
+# Making a Basic Box Plot
+```{r}
+ggplot(dataset, aes(x = factor(n_student), y = pretest)) +
+geom_boxplot()
+```
+# Box plot with narrower boxes (1)
+# With smaller, hollow outlier points(2)
+```{r}
+ggplot(dataset, aes(x = factor(n_student), y = pretest)) +geom_boxplot(width = .5)
+ggplot(dataset, aes(x = factor(n_student), y = pretest)) +geom_boxplot(outlier.size = 1.5, outlier.shape = 21)
+```
+
+```{r}
+ggplot(dataset, aes(x = 1, y = pretest)) +geom_boxplot() +scale_x_continuous(breaks = NULL) +theme(axis.title.x = element_blank())
+```
+
+# Adding notches to a box plot to assess whether the medians are different.
+```{r}
+ggplot(dataset, aes(x = factor(n_student), y = pretest)) +geom_boxplot(notch = TRUE)
+```
+# Adding means to box plot
+```{r}
+ggplot(dataset, aes(x = factor(n_student), y = pretest)) +geom_boxplot() +stat_summary(fun = "mean", geom = "point", shape = 23, size = 3,
+fill = "white")
+```
+# Making a Violin Plot
+```{r}
+data6 <- ggplot(dataset, aes(x = pretest, y = n_student))
+data6+geom_violin()
+```
+# A violin plot with box plot overlaid on it
+```{r}
+data6+geom_violin() +geom_boxplot(width = .1, fill = "black", outlier.colour = NA) +
+stat_summary(fun= median, geom = "point", fill = "white", shape = 21,
+size = 2.5)
+```
+# A violin plot with tails
+```{r}
+data6+geom_violin(trim = FALSE)
+```
+# Violin plot with area proportional to number of observations
+```{r}
+data6 +geom_violin(scale = "count")
+```
+# Violin plot with
+```{r}
+# More smoothing
+data6+geom_violin(adjust = 2)
+# Less smoothing
+data6 +geom_violin(adjust = .5)
+
+```
+
+# Making a Dot Plot
+```{r}
+# Save a modified data set that only includes of males data for marks that contains > 50
+data7 <- dataset %>%
+filter(gender == "Male" & pretest > 50)
+```
+```{r}
+# Create a base ggplot object using `data7`, called `data7_p` (for data7 plot)
+data8 <- ggplot(data7,aes(x=pretest))
+data8+geom_dotplot()
+```
+# Dot plot with stackdir = “center” (1)
+# With stackdir = “centerwhole”(2)
+```{r}
+data8 +
+geom_dotplot(binwidth = .25, stackdir = "center") +
+scale_y_continuous(breaks = NULL) +
+theme(axis.title.y = element_blank())
+data8 +
+geom_dotplot(binwidth = .25, stackdir = "centerwhole") +
+scale_y_continuous(breaks = NULL) +
+theme(axis.title.y = element_blank())
+```
+# Making Multiple Dot Plots for Grouped Data
+```{r}
+ggplot(dataset, aes(x = gender, y = n_student)) +
+geom_dotplot(binaxis = "y", binwidth = .5, stackdir = "center")
+```
+# Dot plot overlaid on box plot
+```{r}
+ggplot(dataset, aes(x = gender, y = n_student)) +
+geom_boxplot(outlier.colour = NA, width = .4) +
+geom_dotplot(binaxis = "y", binwidth = .5, stackdir = "center", fill = NA)
+
+```
+# Dot plot next to box plot
+```{r}
+ggplot(dataset, aes(x = pretest, y = n_student)) +
+geom_boxplot(aes(x = as.numeric(pretest) + .2, group = pretest), width = .25) +geom_dotplot(aes(x = as.numeric(pretest) - .2, group = pretest),binaxis = "y",binwidth = .5,stackdir = "center") +scale_x_continuous(breaks = 1:nlevels(dataset$pretest),labels=levels(dataset$pretest)
+)
+```
+# Making a Density Plot of Two-Dimensional Data
+```{r}
+# Save a base plot object
+ ggplot(dataset, aes(x = pretest, y = posttest))+geom_point() +stat_density2d()
+# Contour lines, with "height" mapped to color
+ggplot(dataset, aes(x = pretest, y = posttest))+geom_point() +stat_density2d()+stat_density2d(aes(colour = ..level..))
+
+```
+# With ..density.. mapped to fill (1)
+# With points, and ..density.. mapped to alpha(2)
+```{r}
+# Map density estimate to fill color
+ggplot(dataset, aes(x = pretest, y = posttest))+geom_point() +stat_density2d()+stat_density2d(aes(fill = ..density..), geom = "raster", contour = FALSE)
+# With points, and map density estimate to alpha
+ggplot(dataset, aes(x = pretest, y = posttest))+geom_point() +stat_density2d()+geom_point() +stat_density2d(aes(alpha = ..density..), geom = "tile", contour = FALSE)
+```
+# Plotting a Function
+# # The data frame is only used for setting the range
+```{r}
+# The normal distribution
+ggplot(data.frame(x = c(-3, 3)), aes(x = x))  + stat_function(fun = dnorm)
+```
+```{r}
+# The t-distribution with df=2
+ggplot(data.frame(x = c(-3, 3)), aes(x = x)) + stat_function(fun = dt, args = list(df = 2))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
